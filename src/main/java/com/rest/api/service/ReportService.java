@@ -3,6 +3,8 @@ package com.rest.api.service;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.mail.MailException;
+
 import com.rest.api.entity.ContactDetails;
 import com.rest.api.request.WeightSlipRequest;
 import com.rest.api.response.MediaFile;
@@ -21,5 +23,5 @@ public interface ReportService {
 
 	String deleteAllWeightSlip();
 
-	String sendEmail(ContactDetails contact);
+	String sendEmail(ContactDetails contact) throws MailException;
 }

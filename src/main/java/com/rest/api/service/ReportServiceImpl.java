@@ -12,6 +12,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -197,7 +198,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public String sendEmail(ContactDetails contact) {
+	public String sendEmail(ContactDetails contact) throws MailException {
 		
 		log.info("########## Entered into sendEmail() in ServiceImpl Layer ##########");
 
