@@ -1,5 +1,7 @@
 package com.rest.api.response;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ConsumeUniversityBody {
-	private String stateprovince;
+	@SerializedName(value = "state-province")
+	private String stateProvince;
 	private String country;
 	private String[] web_pages;
 	private String name;

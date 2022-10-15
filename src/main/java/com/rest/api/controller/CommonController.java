@@ -1,6 +1,7 @@
 package com.rest.api.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -152,7 +153,7 @@ public class CommonController {
 	}
 
 	@Operation(summary = "getAllUniversityDetailsByCountryName")
-	@GetMapping(path = "/get-university-details")
+	@GetMapping(path = "/university-details")
 	public ResponseEntity<ApiResponseObject> getUniversityDetailsByCountryName(
 			@Parameter(description = "String", required = true) @RequestParam(name = "country_name", required = true) String countryName) {
 		HttpStatus status = null;
@@ -175,7 +176,7 @@ public class CommonController {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 
-		return new ResponseEntity<>(new ApiEntity<List<UniversityDetailsDTO>>(message, response), httpHeaders, status);
+		return new ResponseEntity<>(new ApiEntity<>(message, response), httpHeaders, status);
 
 	}
 

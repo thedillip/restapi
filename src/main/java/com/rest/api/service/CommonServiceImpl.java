@@ -2,7 +2,13 @@ package com.rest.api.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -177,8 +183,7 @@ public class CommonServiceImpl implements CommonService {
 
 	@Override
 	public List<UniversityDetailsDTO> getUniversityDetailsByCountryName(String countryName) {
-		List<ConsumeUniversityBody> body = null;
-		List<UniversityDetailsDTO> listUniversity = new ArrayList<UniversityDetailsDTO>();
+		List<UniversityDetailsDTO> listUniversity = new ArrayList<>();
 		String apiUrl = universityDetailsUrl + "?country=" + countryName;
 
 		try {
@@ -186,18 +191,14 @@ public class CommonServiceImpl implements CommonService {
 					+ apiUrl);
 			String fetchDataFromOtherApi = fetchDataFromOtherApi(apiUrl);
 			ConsumeUniversityBody[] fromJson = gson.fromJson(fetchDataFromOtherApi, ConsumeUniversityBody[].class);
-			body = Arrays.asList(fromJson);
 
-			for (int i = 0; i < body.size(); i++) {
-				UniversityDetailsDTO dto = new UniversityDetailsDTO();
-
-				dto.setCountryCode(body.get(i).getAlpha_two_code());
-				dto.setCountryName(body.get(i).getCountry());
-				dto.setUniversityName(body.get(i).getName());
-				dto.setUniversityWebsite(body.get(i).getWeb_pages()[0]);
-
-				listUniversity.add(dto);
-			}
+			listUniversity = Arrays.stream(fromJson).map(p -> {
+				UniversityDetailsDTO build = UniversityDetailsDTO.builder().universityName(p.getName())
+						.countryName(p.getCountry()).countryCode(p.getAlpha_two_code())
+						.stateProvince(p.getStateProvince()).universityWebsite(p.getWeb_pages()[0]).build();
+				return build;
+			}).distinct().sorted((obj1, obj2) -> obj1.getUniversityName().compareTo(obj2.getUniversityName()))
+					.collect(Collectors.toList());
 		} catch (Exception e) {
 			log.info(
 					"########## Exception Occured in getUniversityDetailsByCountryName() in ServiceImpl Layer ########## "

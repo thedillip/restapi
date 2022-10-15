@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UniversityDetailsDTO {
+	private String universityName;
 	private String countryName;
 	private String countryCode;
-	private String universityName;
+	private String stateProvince;
 	private String universityWebsite;
 }
