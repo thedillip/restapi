@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.rest.api.dto.GuessGenderByNameDTO;
 import com.rest.api.dto.RandomQuoteDTO;
 import com.rest.api.dto.UniversityDetailsDTO;
 import com.rest.api.response.ApiEntity;
@@ -20,7 +20,6 @@ import com.rest.api.response.BankDetailsResponse;
 import com.rest.api.response.PostOfficeDetailsResponse;
 import com.rest.api.service.CommonService;
 import com.rest.api.util.ProjectConstant;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.extern.slf4j.Slf4j;
@@ -151,11 +150,11 @@ public class CommonController {
 
 		return new ResponseEntity<>(new ApiEntity<BankDetailsResponse>(message, response), httpHeaders, status);
 	}
-	
+
 	@Operation(summary = "getAllUniversityDetailsByCountryName")
 	@GetMapping(path = "/get-university-details")
 	public ResponseEntity<ApiResponseObject> getUniversityDetailsByCountryName(
-			@Parameter(description = "String", required = true) @RequestParam(name = "country_name",required = true) String countryName) {
+			@Parameter(description = "String", required = true) @RequestParam(name = "country_name", required = true) String countryName) {
 		HttpStatus status = null;
 		HttpHeaders httpHeaders = new HttpHeaders();
 		String message = null;
@@ -176,8 +175,35 @@ public class CommonController {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 
-		return new ResponseEntity<>(new ApiEntity<List<UniversityDetailsDTO>>(message, response),
-				httpHeaders, status);
+		return new ResponseEntity<>(new ApiEntity<List<UniversityDetailsDTO>>(message, response), httpHeaders, status);
 
+	}
+
+	@Operation(summary = "Guess Gender By Name")
+	@GetMapping(path = "/guess-gender")
+	public ResponseEntity<ApiResponseObject> guessGenderByName(
+			@Parameter(description = "String", required = true) @RequestParam(name = "name", required = true) String name) {
+
+		HttpStatus status = null;
+		HttpHeaders httpHeaders = new HttpHeaders();
+		String message = null;
+		GuessGenderByNameDTO response = null;
+		log.info("############# Hitting /guess-gender API in Controller Layer ###############");
+		try {
+			response = commonService.guessGenderByName(name);
+			if (response != null) {
+				message = ProjectConstant.DATA_FOUND;
+				status = HttpStatus.OK;
+			} else {
+				message = ProjectConstant.DATA_NOT_FOUND;
+				status = HttpStatus.NOT_FOUND;
+			}
+		} catch (Exception e) {
+			log.info("############# Exception Occured in /guess-gender in Controller Layer ##########" + e);
+			message = e.getMessage();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		return new ResponseEntity<>(new ApiEntity<>(message, response), httpHeaders, status);
 	}
 }

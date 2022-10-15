@@ -15,6 +15,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.rest.api.dto.BankDetailsDTO;
+import com.rest.api.dto.GuessGenderByNameDTO;
 import com.rest.api.dto.PinCodeDTO;
 import com.rest.api.dto.PinCodeDetailsDTO;
 import com.rest.api.dto.RandomQuoteDTO;
@@ -44,6 +45,8 @@ public class CommonServiceImpl implements CommonService {
 	private String bankDetailsUrl;
 	@Value("${universitydetails.url}")
 	private String universityDetailsUrl;
+	@Value("${guessgender.url}")
+	private String guessGenderUrl;
 
 	@Override
 	public RandomQuoteDTO getRandomQuote() {
@@ -201,5 +204,22 @@ public class CommonServiceImpl implements CommonService {
 							+ e);
 		}
 		return listUniversity;
+	}
+
+	@Override
+	public GuessGenderByNameDTO guessGenderByName(String name) {
+		GuessGenderByNameDTO response = null;
+		try {
+			String apiUrl = guessGenderUrl+name;
+			log.info("########## Entered in guessGenderByName() in ServiceImpl Layer :: apiUrl :: "
+					+ apiUrl);
+			String fetchDataFromOtherApi = fetchDataFromOtherApi(apiUrl);
+			response = gson.fromJson(fetchDataFromOtherApi, GuessGenderByNameDTO.class);
+		} catch (Exception e) {
+			log.info(
+					"########## Exception Occured in guessGenderByName() in ServiceImpl Layer ########## "
+							+ e);
+		}
+		return response;
 	}
 }

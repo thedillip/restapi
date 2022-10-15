@@ -41,3 +41,6 @@ bankdetails:
   
 universitydetails:
   url: http://universities.hipolabs.com/search
+  
+guessgender:
+  url: https://api.genderize.io/?name=

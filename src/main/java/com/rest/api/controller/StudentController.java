@@ -173,7 +173,7 @@ public class StudentController {
 		return new ResponseEntity<>(new ApiEntity<String>(message, response), httpHeaders, status);
 	}
 
-	@Operation(summary = "deleteAllStudentDetailsByRollNo")
+	@Operation(summary = "deleteAllStudentDetails")
 	@DeleteMapping(path = "/student")
 	public ResponseEntity<ApiResponseObject> deleteAllStudent() {
 		HttpStatus status = null;
