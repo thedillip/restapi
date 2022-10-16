@@ -26,12 +26,14 @@ import com.rest.api.util.ProjectConstant;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
 
 @RestController
 @CrossOrigin
 @Slf4j
+@Tag(name = "Report Controller")
 public class ReportController {
 
 	@Autowired
@@ -47,8 +49,8 @@ public class ReportController {
 		try {
 			reMessage = reportService.startReportApi();
 
-			if (reMessage.equals(ProjectConstant.SUCCESS_MSG)) {
-				message = "API has been Started";
+			if (reMessage != null) {
+				message = "Heroku Server is UP";
 				status = HttpStatus.OK;
 				log.info("########## API is UP ##########");
 			} else {
