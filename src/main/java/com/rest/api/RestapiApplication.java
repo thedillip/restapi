@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Spring Boot REST API - Developed By Dillip K Sahoo"))
+@OpenAPIDefinition(info = @Info(title = "Spring Boot Based API - Developed By Dillip K Sahoo"))
 public class RestapiApplication {
 
 	public static void main(String[] args) {
