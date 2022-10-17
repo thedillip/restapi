@@ -30,6 +30,9 @@ spring:
             
 #External URL configuration
 
+swagger-ui:
+  url: https://dillipapi.herokuapp.com/swagger-ui.html
+
 randomquote:
   url: https://api.quotable.io/random
   
