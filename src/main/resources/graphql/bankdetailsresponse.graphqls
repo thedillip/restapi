@@ -1,0 +1,14 @@
+type BankDetailsResponse{
+	micrCode:String
+	branchName:String
+	address:String
+	state:String
+	contact:String
+	cityName:String
+	center:String
+	district:String
+	swift:String
+	bankName:String
+	bankCode:String
+	ifscCode:String
+}

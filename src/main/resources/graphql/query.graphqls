@@ -4,6 +4,7 @@ type Query{
 	book(bookId:Float):Book
 	employees:[Employee]
 	employee(id:Int):Employee
+	bankDetails(ifsc:String):BankDetailsResponse
 }
 
 type Mutation{
