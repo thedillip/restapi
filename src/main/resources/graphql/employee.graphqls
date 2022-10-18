@@ -1,0 +1,12 @@
+type Employee{
+	id:ID!
+	firstName:String
+	lastName:String
+	email:String
+	phone:String
+	gender:String
+	country:String
+	state:String
+	city:String
+	companyName:String
+}

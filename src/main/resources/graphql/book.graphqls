@@ -1,0 +1,9 @@
+type Book{
+	bookId:ID!
+	bookName:String
+	bookDesc:String
+	authorName:String
+	isbn:String
+	price:Float
+	page:Int
+}

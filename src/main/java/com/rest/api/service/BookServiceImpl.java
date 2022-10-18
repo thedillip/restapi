@@ -7,9 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rest.api.dto.BookDTO;
 import com.rest.api.entity.Book;
 import com.rest.api.repository.BookRepository;
+import com.rest.api.request.BookRequest;
 import com.rest.api.util.ProjectConstant;
 
 @Service
@@ -22,7 +22,7 @@ public class BookServiceImpl implements BookService {
 	private BookRepository bookRepository;
 
 	@Override
-	public Book createBook(BookDTO bookDto) {
+	public Book createBook(BookRequest bookDto) {
 		Book book = modelMapper.map(bookDto, Book.class);
 		return bookRepository.save(book);
 	}
@@ -39,17 +39,17 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book updateBookByBookId(long bookId, BookDTO bookDto) {
+	public Book updateBookByBookId(long bookId, BookRequest bookRequest) {
 		Book book = null;
 		try {
 			book = bookRepository.findByBookId(bookId);
 
-			book.setBookName(bookDto.getBookName());
-			book.setBookDesc(bookDto.getBookDesc());
-			book.setAuthorName(bookDto.getAuthorName());
-			book.setIsbn(bookDto.getIsbn());
-			book.setPrice(bookDto.getPrice());
-			book.setPage(bookDto.getPage());
+			book.setBookName(bookRequest.getBookName());
+			book.setBookDesc(bookRequest.getBookDesc());
+			book.setAuthorName(bookRequest.getAuthorName());
+			book.setIsbn(bookRequest.getIsbn());
+			book.setPrice(bookRequest.getPrice());
+			book.setPage(bookRequest.getPage());
 
 			Book updatedBook = bookRepository.save(book);
 			return updatedBook;

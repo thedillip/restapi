@@ -1,4 +1,4 @@
-package com.rest.api.dto;
+package com.rest.api.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BookDTO {
+public class BookRequest {
 	private String bookName;
 	private String bookDesc;
 	private String authorName;

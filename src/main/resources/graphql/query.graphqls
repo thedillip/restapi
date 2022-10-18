@@ -1,0 +1,18 @@
+type Query{
+	message(name:String):String
+	books:[Book]
+	book(bookId:Float):Book
+	employees:[Employee]
+	employee(id:Int):Employee
+}
+
+type Mutation{
+	createBook(bookRequest:BookRequest):Book
+	updateBookByBookId(bookId:Float, bookRequest:BookRequest):Book
+	deleteAllBooks:String
+	deleteBookByBookId(bookId:Float):String
+	createEmployee(employeeRequest:EmployeeRequest):Employee
+	updateEmployeeById(employeeRequest:EmployeeRequest):String
+	deleteAllEmployees:String
+	deleteEmployeeById(id:Int):String
+}

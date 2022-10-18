@@ -1,0 +1,12 @@
+input EmployeeRequest{
+	id:Int
+	firstName:String
+	lastName:String
+	email:String
+	phone:String
+	gender:String
+	country:String
+	state:String
+	city:String
+	companyName:String
+}
