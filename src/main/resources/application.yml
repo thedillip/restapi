@@ -2,3 +2,11 @@ spring:
   profiles:
     active:
     - prod
+    
+server:  port: 8081
+  
+application:
+  title: Spring Boot Based API - Developed By Dillip K Sahoo
+  version: 2.0.0
+  
+graphql:  client:    url: https://countries.trevorblades.com/graphql
