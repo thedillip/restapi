@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.InternetAddress;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -16,6 +18,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 import com.rest.api.entity.ContactDetails;
@@ -47,6 +51,11 @@ public class ReportServiceImpl implements ReportService {
 	
 	@Value("${swagger-ui.url}")
 	private String swaggerUiUrl;
+	@Value("${spring.mail.username}")
+	private String springMailUserName;
+	@Value("${spring.mail.name}")
+	private String springMailName;
+	
 	
 	@Override
 	public String startReportApi() {
@@ -209,20 +218,29 @@ public class ReportServiceImpl implements ReportService {
 				+ "I hope you are having a productive day.\n\nI greatly appreciate the time you spent for visiting my Portfolio.\n\n"
 				+ "Thank you for sharing your valuable feedback - Keep in Touch"
 				+ "\n\nNOTE: This is an auto generated mail. Please do not reply to this message or on this email address.\n\n"
-				+ "Thanks & Regards \nDillip K Sahoo\nContact Number :- +91 8117941692\nMailto:- lit.dillip2017@gmail.com\nWebsite:- https://dillipfolio.web.app";
+				+ "Thanks & Regards \nDillip K Sahoo\nContact Number :- +91 8117941692\nMailto:- thedillip1@gmail.com\nWebsite:- https://dillipfolio.web.app";
 
 		String subject = "Welcome to DillipFolio – Thanks for Visiting !!";
 		
 		log.info("########## Email Body ########## :: Email Content :: "+emailBody);
 
-		SimpleMailMessage message = new SimpleMailMessage();
+//		SimpleMailMessage message = new SimpleMailMessage();
+//
+//		message.setFrom("thedillip1@gmail.com");
+//		message.setTo(contact.getEmail());
+//		message.setText(emailBody);
+//		message.setSubject(subject);
+		
+		MimeMessagePreparator preparator = (mimeMessage) -> {
+	        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+	        helper.setFrom(new InternetAddress(springMailUserName, springMailName));
+	        helper.setTo(contact.getEmail());
+	        helper.setSubject(subject);
+	        helper.setText(emailBody, false);
+	    };   
 
-		message.setFrom("dongjinmaster9@gmail.com");
-		message.setTo(contact.getEmail());
-		message.setText(emailBody);
-		message.setSubject(subject);
-
-		mailSender.send(message);
+//		mailSender.send(message);
+	    mailSender.send(preparator);
 
 		log.info("########## Mail has been send Successfully :: SUCCESS ##########");
 
