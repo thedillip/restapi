@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.rest.api.dto.StudentDTO;
 import com.rest.api.entity.Student;
+import com.rest.api.exception.ResourceNotFoundException;
 import com.rest.api.repository.StudentRepository;
 import com.rest.api.request.StudentRequest;
 import com.rest.api.util.ProjectConstant;
@@ -74,7 +75,7 @@ public class StudentServiceImpl implements StudentService {
 		Optional<Student> student = null;
 		StudentDTO reStudent = null;
 
-		try {
+//		try {
 			student = studentRepository.findById(rollNo);
 			if (student.isPresent()) {
 				Student tempStudent = student.get();
@@ -84,10 +85,12 @@ public class StudentServiceImpl implements StudentService {
 				reStudent.setGender(tempStudent.getGender());
 				reStudent.setAge(tempStudent.getAge());
 				reStudent.setRollNumber(tempStudent.getRollNo());
+			}else {
+				throw new ResourceNotFoundException("Student not found in the server with the rollNo "+rollNo);
 			}
-		} catch (Exception e) {
-			log.info("############# Exception Occured ##########", e);
-		}
+//		} catch (Exception e) {
+//			log.info("############# Exception Occured ##########", e);
+//		}
 		return reStudent;
 	}
 

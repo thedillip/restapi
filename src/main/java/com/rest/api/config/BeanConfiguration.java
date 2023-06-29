@@ -18,7 +18,7 @@ public class BeanConfiguration {
 	public Gson getGson() {
 		return new Gson();
 	}
-	
+
 	@Bean
 	public ModelMapper getModelMapper() {
 		return new ModelMapper();

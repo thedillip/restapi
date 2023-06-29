@@ -19,6 +19,8 @@ import com.rest.api.dto.StudentDTO;
 import com.rest.api.request.StudentRequest;
 import com.rest.api.response.ApiEntity;
 import com.rest.api.response.ApiResponseObject;
+import com.rest.api.response.EmployeeResponse;
+import com.rest.api.service.EmployeeService;
 import com.rest.api.service.StudentService;
 import com.rest.api.util.ProjectConstant;
 
@@ -35,6 +37,9 @@ public class StudentController {
 
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private EmployeeService employeeService;
 
 	@Operation(summary = "saveStudentDetails")
 	@PostMapping(path = "/student", consumes = "application/json", produces = "application/json")
@@ -99,7 +104,7 @@ public class StudentController {
 		String message = null;
 		StudentDTO response = null;
 		log.info("############# findStudentDetailsByRollNumber() :: roll_no :: " + rollNo);
-		try {
+//		try {
 			response = studentService.findStudentDetailsByRollNumber(rollNo);
 			if (response != null) {
 				status = HttpStatus.OK;
@@ -108,11 +113,11 @@ public class StudentController {
 				status = HttpStatus.NOT_FOUND;
 				message = ProjectConstant.DATA_NOT_FOUND;
 			}
-		} catch (Exception e) {
-			log.info("############# Exception Occured ##########", e);
-			message = e.getMessage();
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
+//		} catch (Exception e) {
+//			log.info("############# Exception Occured ##########", e);
+//			message = e.getMessage();
+//			status = HttpStatus.INTERNAL_SERVER_ERROR;
+//		}
 
 		return new ResponseEntity<>(new ApiEntity<StudentDTO>(message, response), httpHeaders, status);
 	}
@@ -198,5 +203,31 @@ public class StudentController {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return new ResponseEntity<>(new ApiEntity<String>(message, response), httpHeaders, status);
+	}
+	
+	@Operation(summary = "getAllEmployeeByJdbcTemplate")
+	@GetMapping(path = "/employee-jdbctemplate", produces = "application/json")
+	public ResponseEntity<ApiResponseObject> getAllEmployeeByJdbcTemplate() {
+		HttpStatus status = null;
+		HttpHeaders httpHeaders = new HttpHeaders();
+		String message = null;
+		List<EmployeeResponse> response = null;
+
+		try {
+			response = employeeService.getAllEmployeeWithJdbcTemplate();
+			if (!response.isEmpty()) {
+				message = ProjectConstant.DATA_FOUND;
+				status = HttpStatus.OK;
+			} else {
+				message = ProjectConstant.DATA_NOT_FOUND;
+				status = HttpStatus.NOT_FOUND;
+			}
+		} catch (Exception e) {
+			log.info("############# Exception Occured ##########", e);
+			message = e.getMessage();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		return new ResponseEntity<>(new ApiEntity<List<EmployeeResponse>>(message, response), httpHeaders, status);
 	}
 }

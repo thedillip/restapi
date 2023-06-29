@@ -7,9 +7,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rest.api.dao.EmployeeDAO;
 import com.rest.api.entity.Employee;
 import com.rest.api.repository.EmployeeRepository;
 import com.rest.api.request.EmployeeRequest;
+import com.rest.api.response.EmployeeResponse;
 import com.rest.api.util.ProjectConstant;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private ModelMapper modelMapper;
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	@Autowired
+	private EmployeeDAO employeeDAO;
 
 	@Override
 	public Employee createEmployee(EmployeeRequest employeeRequest) {
@@ -77,6 +81,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public String deleteEmployeeById(int id) {
 		employeeRepository.deleteById(id);
 		return ProjectConstant.DELETED_MSG;
+	}
+
+	@Override
+	public List<EmployeeResponse> getAllEmployeeWithJdbcTemplate() {
+		return employeeDAO.getAllEmployee();
 	}
 
 }

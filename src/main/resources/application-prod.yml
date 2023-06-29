@@ -1,12 +1,26 @@
 #Heroku Production Environment Configuration
 
 #Heroku Database Configuration
+# spring:
+#  datasource:
+#    url: jdbc:postgresql://ec2-3-224-164-189.compute-1.amazonaws.com:5432/d4tjkkhpa9up9m
+# 
+#    username: eprreodgikglep
+#    password: a87dd5453e66b29863bdf65f9672608e758ea665433ac9446683968cb151aa94
+#    
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#      format_sql: true
+#    show-sql: true
+    
+#Railway Cloud Postgres Configuration
 spring:
   datasource:
-    url: jdbc:postgresql://ec2-3-224-164-189.compute-1.amazonaws.com:5432/d4tjkkhpa9up9m
+    url: jdbc:postgresql://containers-us-west-120.railway.app:6452/railway
  
-    username: eprreodgikglep
-    password: a87dd5453e66b29863bdf65f9672608e758ea665433ac9446683968cb151aa94
+    username: postgres
+    password: Ic36bPSXUY7YdKn6giO9
     
   jpa:
     hibernate:
