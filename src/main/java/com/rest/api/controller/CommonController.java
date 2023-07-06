@@ -9,17 +9,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rest.api.dto.GuessGenderByNameDTO;
 import com.rest.api.dto.RandomQuoteDTO;
 import com.rest.api.dto.UniversityDetailsDTO;
+import com.rest.api.request.SendMessageRequest;
 import com.rest.api.response.ApiEntity;
 import com.rest.api.response.ApiResponseObject;
 import com.rest.api.response.BankDetailsResponse;
 import com.rest.api.response.PostOfficeDetailsResponse;
 import com.rest.api.service.CommonService;
+import com.rest.api.service.TwillioMessagingService;
 import com.rest.api.util.ProjectConstant;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,6 +39,9 @@ public class CommonController {
 
 	@Autowired
 	private CommonService commonService;
+
+	@Autowired
+	private TwillioMessagingService twillioMessagingService;
 
 	@Operation(summary = "getRandomQuote")
 	@GetMapping(path = "/quote")
@@ -204,6 +211,27 @@ public class CommonController {
 			}
 		} catch (Exception e) {
 			log.info("############# Exception Occured in /guess-gender in Controller Layer ##########" + e);
+			message = e.getMessage();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		return new ResponseEntity<>(new ApiEntity<>(message, response), httpHeaders, status);
+	}
+
+	@Operation(summary = "Send SMS to Mobile Number")
+	@PostMapping(path = "/send-message")
+	public ResponseEntity<ApiResponseObject> sendMeassage(@RequestBody final SendMessageRequest sendMessageRequest) {
+
+		HttpStatus status = null;
+		HttpHeaders httpHeaders = new HttpHeaders();
+		String message = null;
+		String response = null;
+		log.info("############# Hitting /send-message API in Controller Layer ###############");
+		try {
+			response = twillioMessagingService.sendMesssage(sendMessageRequest);
+			status = HttpStatus.CREATED;
+		} catch (Exception e) {
+			log.info("############# Exception Occured in /send-message in Controller Layer ##########" + e);
 			message = e.getMessage();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
