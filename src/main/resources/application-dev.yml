@@ -48,11 +48,3 @@ universitydetails:
   
 guessgender:
   url: https://api.genderize.io/?name=
-  
-  
-#Twillio Configuration Details
-twillio:
-  account:
-    sid: AC3bc4678897cf80dcb8d8954868e613b2
-    authToken: 1f267e4e34820e1ec01e04df01d6850f
-    number: '+16187062724'

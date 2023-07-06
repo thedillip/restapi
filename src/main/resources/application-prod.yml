@@ -20,7 +20,7 @@ spring:
     url: jdbc:postgresql://containers-us-west-120.railway.app:6452/railway
  
     username: postgres
-    password: Ic36bPSXUY7YdKn6giO9
+    password: ${POSTGRES_PASSWORD}
     
   jpa:
     hibernate:
@@ -68,5 +68,5 @@ guessgender:
 twillio:
   account:
     sid: AC3bc4678897cf80dcb8d8954868e613b2
-    authToken: 1f267e4e34820e1ec01e04df01d6850f
+    authToken: ${TWILLIO_AUTH_TOKEN}
     number: '+16187062724'

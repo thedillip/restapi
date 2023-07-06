@@ -3,6 +3,7 @@ package com.rest.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,9 @@ public class CommonController {
 
 	@Autowired
 	private TwillioMessagingService twillioMessagingService;
+	
+	@Value("${hello.msg}")
+	private String msg;
 
 	@Operation(summary = "getRandomQuote")
 	@GetMapping(path = "/quote")
@@ -227,6 +231,7 @@ public class CommonController {
 		String message = null;
 		String response = null;
 		log.info("############# Hitting /send-message API in Controller Layer ###############");
+		log.info("#### === {}",msg);
 		try {
 			response = twillioMessagingService.sendMesssage(sendMessageRequest);
 			status = HttpStatus.CREATED;
